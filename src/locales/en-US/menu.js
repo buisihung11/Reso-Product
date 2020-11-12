@@ -49,4 +49,11 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+  // prouct
+  'menu.product': 'Quản lý sản phẩm',
+  'menu.product.list': 'Danh sách',
+  // menu
+  'menu.menu': 'Quản Lý Menu',
+  'menu.menu.list': 'Danh sách Menu',
+  'menu.menu.update': 'Cập nhật Menu',
 };

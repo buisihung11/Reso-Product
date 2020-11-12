@@ -39,12 +39,12 @@ const menuDataRender = (menuList) =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright={`${new Date().getFullYear()} 蚂蚁金服体验技术部出品`}
+    copyright={`${new Date().getFullYear()} UniTeam`}
     links={[
       {
         key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
+        title: 'Reso',
+        href: 'https://reso.vn',
         blankTarget: true,
       },
       {
@@ -55,7 +55,7 @@ const defaultFooterDom = (
       },
       {
         key: 'Ant Design',
-        title: 'Ant Design',
+        title: 'Product Catalog',
         href: 'https://ant.design',
         blankTarget: true,
       },
@@ -141,7 +141,7 @@ const BasicLayout = (props) => {
           {children}
         </Authorized>
       </ProLayout>
-      <SettingDrawer
+      {/* <SettingDrawer
         settings={settings}
         onSettingChange={(config) =>
           dispatch({
@@ -149,7 +149,7 @@ const BasicLayout = (props) => {
             payload: config,
           })
         }
-      />
+      /> */}
     </>
   );
 };

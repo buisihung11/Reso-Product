@@ -57,3 +57,71 @@ export const getRouteAuthority = (path, routeData) => {
   });
   return authorities;
 };
+
+// Custom utils
+
+export const buildParams = ({ current, pageSize }, sorter, formData) => {
+  // build filters
+  const filters = {};
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value) {
+      filters[`${key}_contains`] = value;
+    }
+  });
+  // build sort
+  let sort;
+  if (sorter && sorter.field) {
+    sort = `${sorter.field},${sorter.order === 'ascend' ? 'ascend' : 'descend'}`;
+  }
+
+  return {
+    page: current,
+    limit: pageSize,
+    sort,
+    ...filters,
+  };
+};
+
+// get Cookie
+export const setCookie = (cname, cvalue, expireDay = 10) => {
+  const d = new Date();
+  d.setTime(d.getTime() + expireDay * 24 * 60 * 60 * 1000);
+  const expires = `expires=${d.toUTCString()}`;
+  document.cookie = `${cname}=${cvalue};${expires};path=/`;
+};
+
+// set Cookie
+export const getCookie = (cname) => {
+  const name = `${cname}=`;
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+};
+// delete all cookies
+export const deleteAllCookie = () => {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i += 1) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf('=');
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+  }
+};
+
+// set localstorage
+export const setLocalStorage = (name, value) => {
+  localStorage.setItem(name, value);
+};
+
+// get localstorage
+export const getLocalStorage = (name) => localStorage.getItem(name);
+//
+export const removeLocalStorage = (key) => localStorage.removeItem(key);
