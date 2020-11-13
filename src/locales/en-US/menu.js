@@ -52,6 +52,7 @@ export default {
   // prouct
   'menu.product': 'Quản lý sản phẩm',
   'menu.product.list': 'Danh sách',
+  'menu.product.create': 'Tạo Sản Phẩm',
   // menu
   'menu.menu': 'Quản Lý Menu',
   'menu.menu.list': 'Danh sách Menu',
