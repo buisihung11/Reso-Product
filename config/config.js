@@ -88,6 +88,19 @@ export default defineConfig({
                   hideInMenu: true,
                   component: './product/create',
                 },
+                {
+                  name: 'product-master',
+                  icon: 'smile',
+                  path: '/product/product-master',
+                  component: './product/product-master',
+                },
+                {
+                  name: 'product-master-create',
+                  icon: 'smile',
+                  path: '/product/product-master/create',
+                  hideInMenu: true,
+                  component: './product/product-master/CreateProductMaster',
+                },
               ],
             },
             // MENU

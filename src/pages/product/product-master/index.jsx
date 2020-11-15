@@ -19,26 +19,26 @@ import { PageContainer } from '@ant-design/pro-layout';
 import AsyncButton from '@/components/AsyncButton';
 import { useDebounceFn, useFormTable } from '@umijs/hooks';
 import { buildParams } from '@/utils/utils';
-import { getTableData } from '@/services/table';
+import { getTableData, getTableData2 } from '@/services/table';
 
 const columns = [
   {
-    title: 'Tên Sản Phẩm',
-    dataIndex: 'name',
+    title: 'Tên Dòng Sản Phẩm',
+    dataIndex: 'product_name',
     fixed: 'left',
     render: (text, record) => <Link to={`/menu/${record.key}`}>{text}</Link>,
   },
   {
     title: 'Nhóm sản phẩm',
-    dataIndex: 'productCategory',
+    dataIndex: 'category_id',
   },
   {
     title: 'Loại sản phẩm',
-    dataIndex: 'productType',
+    dataIndex: 'product_type_name',
   },
   {
     title: 'Giá',
-    dataIndex: 'price',
+    dataIndex: 'price1',
   },
   {
     title: 'Trạng thái',
@@ -51,7 +51,7 @@ const formItemLayout = {
   labelCol: { span: 2 },
   wrapperCol: { span: 4 },
 };
-const ProductList = ({ history }) => {
+const ProductMasterList = ({ history }) => {
   const [form] = Form.useForm();
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -61,7 +61,7 @@ const ProductList = ({ history }) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
-      return getTableData('menus', options);
+      return getTableData2('products', { ...options, 'product-type-id': 6 });
     },
     {
       defaultPageSize: 10,
@@ -85,7 +85,7 @@ const ProductList = ({ history }) => {
   const hasSelected = selectedRows.length > 0;
 
   return (
-    <PageContainer content="Danh sách sản phẩm">
+    <PageContainer>
       <Form form={form} onFieldsChange={changeFilter} layout="inline">
         <Card bordered={false} style={{ width: '100%' }}>
           <Space direction="vertical" style={{ width: '100%' }}>
@@ -109,7 +109,7 @@ const ProductList = ({ history }) => {
               <Col>
                 <Button
                   type="primary"
-                  onClick={() => history.push('/product/create')}
+                  onClick={() => history.push('/product/product-master/create')}
                   icon={<PlusOutlined />}
                 >
                   Thêm Sản phẩm
@@ -139,4 +139,4 @@ const ProductList = ({ history }) => {
   );
 };
 
-export default ProductList;
+export default ProductMasterList;

@@ -63,13 +63,13 @@ class AvatarDropdown extends React.Component {
       </HeaderDropdown>
     ) : (
       <span className={`${styles.action} ${styles.account}`}>
-        <Spin
+        {/* <Spin
           size="small"
           style={{
             marginLeft: 8,
             marginRight: 8,
           }}
-        />
+        /> */}
       </span>
     );
   }

@@ -81,6 +81,8 @@ const BasicLayout = (props) => {
       dispatch({
         type: 'user/fetchCurrent',
       });
+
+      // fetch all global data
     }
   }, []);
   /**

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import SelectStore from '@/components/SelectStore';
+import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Form, Typography, Input, DatePicker, Row, Col, Button } from 'antd';
 import SelectDay from '@/components/SelectDay';
 import AsyncButton from '@/components/AsyncButton';
-import ProductTable from './components/ProductTable';
-import ProductMenuTable from './components/ProductMenuTable';
+import { getStore } from '@/services/store';
+import ProductMenuSection from './components/ProductMenuSection';
+import SelectStore from '@/components/CommonSelect/CommonSelect';
 
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
@@ -23,31 +23,45 @@ const UpdateMenu = (props) => {
     form.setFieldsValue();
   }, [updateId]);
 
-  const handlUpdate = () => {
+  const handlUpdateMenuInfo = () => {
     form
       .validateFields()
       .then((values) => {
         form.resetFields();
-        onCreate(values);
+        // onCreate(values);
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
       });
   };
 
-  console.log('props', props);
   return (
     <PageContainer>
-      <Card bordered={false}>
-        <Typography.Title level={4}>Update Menu {updateId}</Typography.Title>
+      <Form
+        style={{
+          marginTop: 8,
+        }}
+        form={form}
+        layout="vertical"
+        name="menuInfo"
+      >
+        <Card bordered={false}>
+          <Row justify="space-between">
+            <Col>
+              <Typography.Title level={4}>Update Menu {updateId}</Typography.Title>
+            </Col>
+            <Col style={{ textAlign: 'right' }}>
+              <Button style={{ marginRight: '8px' }}>Hủy</Button>
+              {!form.isFieldsTouched() && (
+                <AsyncButton
+                  type="primary"
+                  onClick={handlUpdateMenuInfo}
+                  title="Cập nhật thông tin"
+                />
+              )}
+            </Col>
+          </Row>
 
-        <Form
-          style={{
-            marginTop: 8,
-          }}
-          form={form}
-          name="menuInfo"
-        >
           <Row gutter={8}>
             <Col xs={24} md={12}>
               <FormItem
@@ -63,46 +77,6 @@ const UpdateMenu = (props) => {
                 <Input placeholder="Tên menu của cửa hàng" />
               </FormItem>
             </Col>
-            <Col xs={24} md={6}>
-              <FormItem
-                label="Các ngày hiệu lực"
-                name="days"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng chọn ngày',
-                  },
-                ]}
-              >
-                <SelectDay />
-              </FormItem>
-            </Col>
-            <Col xs={24} md={6}>
-              <FormItem
-                label="Thời gian hiệu lực"
-                name="date"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập phần này',
-                  },
-                ]}
-              >
-                <RangePicker
-                  picker="time"
-                  showTime
-                  use12Hours
-                  format="h:mm a"
-                  minuteStep={15}
-                  style={{
-                    width: '100%',
-                  }}
-                  placeholder={['Từ', 'Đến']}
-                />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row gutter={8}>
             <Col xs={24} md={12}>
               <FormItem
                 label="Cửa hàng áp dụng"
@@ -114,34 +88,69 @@ const UpdateMenu = (props) => {
                   },
                 ]}
               >
-                <SelectStore />
+                <SelectStore
+                  fetchOnFirst
+                  onSearch={getStore}
+                  defaultValue={localStorage.getItem('CURRENT_STORE')}
+                  disabled={localStorage.getItem('CURRENT_STORE') !== null}
+                />
               </FormItem>
             </Col>
           </Row>
-
-          <Row justify="end">
-            <Button style={{ marginRight: '8px' }}>Hủy</Button>
-            <AsyncButton type="primary" onClick={handlUpdate} title="Tạo" />
+          <Row gutter={8}>
+            <Col xs={24} md={24}>
+              <Form.Item label="Các ngày hiệu lực">
+                <Input.Group compact>
+                  <FormItem
+                    label="Các ngày hiệu lực"
+                    noStyle
+                    name="days"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng chọn ngày',
+                      },
+                    ]}
+                  >
+                    <SelectDay
+                      style={{
+                        width: '25%',
+                      }}
+                    />
+                  </FormItem>
+                  <FormItem
+                    // label="Thời gian hiệu lực"
+                    name="date"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập phần này',
+                      },
+                    ]}
+                  >
+                    <RangePicker
+                      picker="time"
+                      noStyle
+                      showTime
+                      use12Hours
+                      format="h:mm a"
+                      minuteStep={15}
+                      style={{
+                        width: '100%',
+                      }}
+                      placeholder={['Từ', 'Đến']}
+                    />
+                  </FormItem>
+                </Input.Group>
+              </Form.Item>
+            </Col>
           </Row>
-        </Form>
 
-        {/* PRODUCT IN MENU */}
-        <Typography.Title level={4}>Sản phẩm trong Menu</Typography.Title>
-        <Row style={{ width: '100%' }}>
-          <Col xs={24} md={10}>
-            <Card>
-              <Typography.Title level={5}>Thêm sản phẩm</Typography.Title>
-              <ProductTable />
-            </Card>
-          </Col>
-          <Col xs={24} md={14}>
-            <Card bordered={false}>
-              <Typography.Title level={5}>Sản phẩm đã thêm</Typography.Title>
-              <ProductMenuTable menuId={updateId} />
-            </Card>
-          </Col>
-        </Row>
-      </Card>
+          {/* PREPARE TO ADD */}
+
+          <ProductMenuSection menuId={updateId} />
+        </Card>
+      </Form>
     </PageContainer>
   );
 };

@@ -1,19 +1,32 @@
+import React from 'react';
+
 import CommonSelect from '@/components/CommonSelect/CommonSelect';
-import { buildCategoriesOption } from '@/components/CommonSelect/utils';
 import ImageUploader from '@/components/ImageUploader/ImageUploader';
 import request from '@/utils/request';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Form, Input, Typography, Row, Col, Radio, Switch, Affix, Button } from 'antd';
-import React from 'react';
+import {
+  Card,
+  Form,
+  Input,
+  Typography,
+  Row,
+  Col,
+  Radio,
+  Switch,
+  Affix,
+  Button,
+  Divider,
+  Tooltip,
+  Select,
+} from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { buildCategoriesOption } from '@/components/CommonSelect/utils';
 
-const onSearchProdCate = (searchValue) => {
-  return request.get(`/menus`);
-};
 const onSearchCollection = (searchValue) => {
   return request.get(`/menus`);
 };
 
-const CreateProduct = () => {
+const CreateProductMaster = () => {
   const [form] = Form.useForm();
 
   return (
@@ -71,23 +84,6 @@ const CreateProduct = () => {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="productCategory"
-                label="Nhóm sản phẩm"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <CommonSelect
-                  placeholder="Vui lòng chọn nhóm sản phẩm"
-                  onSearch={onSearchProdCate}
-                  fetchOnFirst
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
                 name="productType"
                 label="Loại sản phẩm"
                 rules={[
@@ -131,10 +127,54 @@ const CreateProduct = () => {
               </Form.Item>
             </Col>
           </Row>
+
+          <Divider orientation="left">Thuộc tính</Divider>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="size"
+                label={
+                  <span>
+                    Size&nbsp;
+                    <Tooltip title="Các thuộc tính cách nhau bởi dấu phẩy">
+                      <QuestionCircleOutlined />
+                    </Tooltip>
+                  </span>
+                }
+              >
+                <Select
+                  placeholder="Bỏ trống nếu không có"
+                  mode="tags"
+                  style={{ width: '100%' }}
+                  tokenSeparators={[',']}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="base"
+                label={
+                  <span>
+                    Base&nbsp;
+                    <Tooltip title="Các thuộc tính cách nhau bởi dấu phẩy">
+                      <QuestionCircleOutlined />
+                    </Tooltip>
+                  </span>
+                }
+              >
+                <Select
+                  placeholder="Bỏ trống nếu không có"
+                  mode="tags"
+                  style={{ width: '100%' }}
+                  tokenSeparators={[',']}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
         </Card>
       </Form>
     </PageContainer>
   );
 };
 
-export default CreateProduct;
+export default CreateProductMaster;

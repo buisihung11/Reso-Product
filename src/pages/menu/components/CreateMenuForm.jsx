@@ -1,12 +1,17 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { DatePicker, Input, Form, Select, Modal, TimePicker } from 'antd';
+import { Input, Form, Select, Modal } from 'antd';
 import { formatMessage } from 'umi';
 import React, { useState } from 'react';
-import SelectStore from '@/components/SelectStore';
 import SelectDay from '@/components/SelectDay';
+import request from '@/utils/request';
+import SelectStore from '@/components/CommonSelect/CommonSelect';
+
 const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
+
+const onSearchStore = (searchValue) => {
+  return request.get(`/menus`, { useCache: true });
+};
 
 const MenuCreateModal = ({ visible, onCreate, onCancel, submitting }) => {
   const [form] = Form.useForm();
@@ -118,8 +123,8 @@ const MenuCreateModal = ({ visible, onCreate, onCancel, submitting }) => {
           <RangePicker
             picker="time"
             showTime
-            use12Hours
-            format="h:mm a"
+            // use12Hours
+            // format="h:mm"
             minuteStep={15}
             style={{
               width: '100%',
@@ -138,7 +143,12 @@ const MenuCreateModal = ({ visible, onCreate, onCancel, submitting }) => {
             },
           ]}
         >
-          <SelectStore />
+          <SelectStore
+            fetchOnFirst
+            defaultValue={localStorage.getItem('CURRENT_STORE')}
+            disabled={localStorage.getItem('CURRENT_STORE') !== null}
+            onSearch={onSearchStore}
+          />
         </FormItem>
       </Form>
     </Modal>

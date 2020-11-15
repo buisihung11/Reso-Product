@@ -1,11 +1,20 @@
 import { queryNotices } from '@/services/user';
+import { getCategories } from '@/services/category';
 const GlobalModel = {
   namespace: 'global',
   state: {
     collapsed: false,
     notices: [],
+    product_categories: [],
+    brand_stores: [],
+    current_store_id: null,
   },
   effects: {
+    *fetchGlobalInfo(_, { call, put, select }) {
+      const data = yield call(getCategories);
+    },
+    *changeCurrentStoreId({ payload }, { call, put, select }) {},
+
     *fetchNotices(_, { call, put, select }) {
       const data = yield call(queryNotices);
       yield put({
@@ -77,7 +86,9 @@ const GlobalModel = {
     ) {
       return { ...state, collapsed: payload };
     },
-
+    changeStore(state, { payload }) {
+      return { ...state, current_store_id: payload };
+    },
     saveNotices(state, { payload }) {
       return {
         collapsed: false,

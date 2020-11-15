@@ -14,14 +14,22 @@ const columns = [
     title: 'Tên Menu',
     dataIndex: 'name',
     fixed: 'left',
-    render: (text, record) => <Link to={`/menu/${record.key}`}>{text}</Link>,
+    render: (text, record) => <Link to={`/menu/${record.id}`}>{text}</Link>,
   },
   {
     title: 'Cửa hàng',
     dataIndex: 'age',
   },
   {
+    title: 'Các ngày áp dụng',
+    dataIndex: 'address',
+  },
+  {
     title: 'Thời gian áp dụng',
+    dataIndex: 'address',
+  },
+  {
+    title: 'Trạng thái',
     dataIndex: 'address',
   },
 ];
