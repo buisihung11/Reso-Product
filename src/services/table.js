@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import requestServer from '@/utils/requestServer';
 
 const data = [];
 for (let i = 0; i < 46; i++) {
@@ -9,6 +10,17 @@ for (let i = 0; i < 46; i++) {
     address: `London, Park Lane no. ${i}`,
   });
 }
+
+export const getTableData2 = (resource, options) => {
+  // return {
+  //   total: data.length,
+  //   list: data,
+  // };
+  return requestServer.get(`/${resource}`, options).then((res) => ({
+    total: res.metadata.total,
+    list: res.data,
+  }));
+};
 
 export const getTableData = (resource, options) => {
   // return {

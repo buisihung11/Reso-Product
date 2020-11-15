@@ -76,7 +76,7 @@ export const buildParams = ({ current, pageSize }, sorter, formData) => {
 
   return {
     page: current,
-    limit: pageSize,
+    size: pageSize,
     sort,
     ...filters,
   };
