@@ -6,7 +6,7 @@ import ProductTable from '@/pages/menu/components/ProductMenuSection/ProductTabl
 
 const { Option } = Select;
 
-const ProductDrawer = ({ onAdd }) => {
+const ProductDrawer = ({ onAdd, btnTitle }) => {
   const [visible, setVisible] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [adding, setAdding] = useState(false);
@@ -29,14 +29,16 @@ const ProductDrawer = ({ onAdd }) => {
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Thêm sản phẩm vào menu
+        {btnTitle}
       </Button>
+
       <Drawer
         title="Chọn sản phẩm để thêm vào menu"
         width={720}
         onClose={onClose}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
+        destroyOnClose
         footer={
           <div
             style={{
@@ -62,6 +64,11 @@ const ProductDrawer = ({ onAdd }) => {
 
 ProductDrawer.defaultProps = {
   onAdd: () => null,
+  btnTitle: (
+    <span>
+      <PlusOutlined /> Thêm
+    </span>
+  ),
 };
 
 export default ProductDrawer;

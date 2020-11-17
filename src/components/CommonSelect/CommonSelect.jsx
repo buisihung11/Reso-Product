@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { getCategories } from '@/services/category';
+import { getStore } from '@/services/store';
+import { getCurrentStore } from '@/utils/utils';
 import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -9,6 +11,10 @@ const buildOptionsDefault = (storeData = []) =>
   storeData?.map((d) => <Option key={d.id}>{d.name}</Option>);
 
 const normalizeResDefault = (res) => res;
+
+const normalizeRes = (res) => {
+  return res?.data;
+};
 
 const CommonSelect = ({
   value,
@@ -69,15 +75,30 @@ const CommonSelect = ({
   );
 };
 
+const SelectStore = (props) => {
+  return (
+    <CommonSelect
+      fetchOnFirst
+      defaultValue={getCurrentStore()}
+      onSearch={getStore}
+      normalizeRes={normalizeRes}
+      style={{ width: 200 }}
+      {...props}
+    />
+  );
+};
+
 const SelectCategory = (props) => {
   return <CommonSelect fetchOnFirst onSearch={getCategories} {...props} />;
 };
 
 CommonSelect.SelectCategory = SelectCategory;
+CommonSelect.SelectStore = SelectStore;
 
 CommonSelect.defaultProps = {
   onSearch: () => [],
   normalizeRes: (res) => res.data,
 };
 
+export { SelectStore, SelectCategory };
 export default CommonSelect;

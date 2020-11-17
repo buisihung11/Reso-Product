@@ -1,12 +1,11 @@
 import React from 'react';
 import { Select } from 'antd';
+import { daysInWeek } from '@/utils/utils';
 
 const { Option } = Select;
 
-const days = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy', 'Chủ nhật'];
-
 const SelectDay = ({ value, onChange, ...props }) => {
-  const options = days.map((d, index) => (
+  const options = daysInWeek.map((d, index) => (
     <Option key={index} value={index}>
       {d}
     </Option>

@@ -1,21 +1,17 @@
 import { Tooltip, Tag } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import { connect, SelectLang } from 'umi';
+import { connect, SelectLang, useHistory } from 'umi';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 import NoticeIconView from './NoticeIconView';
-import SelectStore from '../CommonSelect/CommonSelect';
+import { SelectStore } from '../CommonSelect/CommonSelect';
 import request from '@/utils/requestServer';
 const ENVTagColor = {
   dev: 'orange',
   test: 'green',
   pre: '#87d068',
-};
-
-const onSearchStore = (searchValue) => {
-  return request.get(`/stores`, { useCache: true });
 };
 
 const normalizeRes = (res) => {
@@ -29,10 +25,13 @@ const GlobalHeaderRight = (props) => {
   if (theme === 'dark' && layout === 'top') {
     className = `${styles.right}  ${styles.dark}`;
   }
+  const history = useHistory();
+  console.log('GlobalHeaderRight props', history);
 
   const onChangeStore = (store) => {
     console.log('ChangeStore', store);
     localStorage.setItem('CURRENT_STORE', store);
+    history.go(0);
   };
 
   return (
@@ -76,14 +75,7 @@ const GlobalHeaderRight = (props) => {
         </a>
       </Tooltip> */}
       {/* <NoticeIconView /> */}
-      <SelectStore
-        fetchOnFirst
-        defaultValue={localStorage.getItem('CURRENT_STORE')}
-        onChange={onChangeStore}
-        onSearch={onSearchStore}
-        normalizeRes={normalizeRes}
-        style={{ width: 200 }}
-      />
+      <SelectStore onChange={onChangeStore} style={{ width: 200 }} />
       <Avatar menu />
       {REACT_APP_ENV && (
         <span>

@@ -113,7 +113,7 @@ export default defineConfig({
                   name: 'list',
                   icon: 'smile',
                   path: '/menu/list',
-                  component: './menu',
+                  component: './menu/menu-list',
                 },
                 {
                   name: 'update',
