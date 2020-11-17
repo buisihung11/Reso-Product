@@ -47,6 +47,7 @@ const MenuList = (props) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
+      console.log('FETCHING MENU');
       return getTableData('menus', options);
     },
     {

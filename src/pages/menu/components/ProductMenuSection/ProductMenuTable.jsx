@@ -63,15 +63,15 @@ const ProductMenuTable = ({ tableProps, onUpdate }) => {
       width: 180,
       ellipsis: true,
       fixed: 'left',
-      dataIndex: 'name',
+      dataIndex: 'product_name',
     },
     {
       title: 'Giá 1',
-      dataIndex: 'price',
+      dataIndex: 'price1',
     },
     {
       title: 'Giá 2',
-      dataIndex: 'price',
+      dataIndex: 'price2',
     },
     {
       title: 'Giá cố định',
@@ -132,11 +132,15 @@ const ProductMenuTable = ({ tableProps, onUpdate }) => {
     );
   };
 
-  const onOkHandler = () => {
+  const onOkHandler = (prod) => {
     if (updateMode) {
-      return onUpdate(currentProduct);
+      return Promise.resolve(onUpdate(prod));
+    } else {
+      dispatch({ type: 'close-modal' });
     }
   };
+
+  console.log('currentProduct', currentProduct);
 
   return (
     <>
@@ -151,7 +155,7 @@ const ProductMenuTable = ({ tableProps, onUpdate }) => {
         updateMode={updateMode}
         product={currentProduct}
         visible={viewDetailVisible}
-        onOk={() => dispatch({ type: 'close-modal' })}
+        onOk={onOkHandler}
         onCancel={() => dispatch({ type: 'close-modal' })}
       />
       <Table scroll={{ x: 600 }} rowKey="id" columns={columns} {...tableProps} />

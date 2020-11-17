@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Form, Typography, Input, DatePicker, Row, Col, Button } from 'antd';
+import { Card, Form, Typography, Input, DatePicker, Row, Col, Button, Empty } from 'antd';
 import SelectDay from '@/components/SelectDay';
 import AsyncButton from '@/components/AsyncButton';
 import { getStore } from '@/services/store';
 import ProductMenuSection from './components/ProductMenuSection';
-import SelectStore from '@/components/CommonSelect/CommonSelect';
+import { SelectStore } from '@/components/CommonSelect/CommonSelect';
+import { addProductIntoMenu } from '@/services/menu';
+import { convertStrToDate, getCurrentStore } from '@/utils/utils';
 
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
@@ -15,11 +17,17 @@ const UpdateMenu = (props) => {
     match: {
       params: { updateId },
     },
+    location: {
+      state: { menu_info },
+    },
   } = props;
   const [form] = Form.useForm();
 
+  console.log('menu_info', menu_info);
+
   useEffect(() => {
     // fetch data from updateId
+
     form.setFieldsValue();
   }, [updateId]);
 
@@ -35,6 +43,20 @@ const UpdateMenu = (props) => {
       });
   };
 
+  if (menu_info === null) {
+    return <Empty description="Không tìm thấy menu này" />;
+  }
+
+  const formInitValues = useMemo(() => {
+    const {
+      time_from_to: [from, to],
+    } = menu_info;
+    const formInitValue = { ...menu_info, store: getCurrentStore() };
+
+    formInitValue.time_from_to = [convertStrToDate(from, 'hh:mm'), convertStrToDate(to, 'hh:mm')];
+    return formInitValue;
+  }, [menu_info]);
+
   return (
     <PageContainer>
       <Form
@@ -42,6 +64,7 @@ const UpdateMenu = (props) => {
           marginTop: 8,
         }}
         form={form}
+        initialValues={formInitValues}
         layout="vertical"
         name="menuInfo"
       >
@@ -66,7 +89,7 @@ const UpdateMenu = (props) => {
             <Col xs={24} md={12}>
               <FormItem
                 label="Tên menu"
-                name="title"
+                name="menu_name"
                 rules={[
                   {
                     required: true,
@@ -88,12 +111,7 @@ const UpdateMenu = (props) => {
                   },
                 ]}
               >
-                <SelectStore
-                  fetchOnFirst
-                  onSearch={getStore}
-                  defaultValue={localStorage.getItem('CURRENT_STORE')}
-                  disabled={localStorage.getItem('CURRENT_STORE') !== null}
-                />
+                <SelectStore disabled />
               </FormItem>
             </Col>
           </Row>
@@ -104,7 +122,7 @@ const UpdateMenu = (props) => {
                   <FormItem
                     label="Các ngày hiệu lực"
                     noStyle
-                    name="days"
+                    name="day_filter"
                     rules={[
                       {
                         required: true,
@@ -114,13 +132,13 @@ const UpdateMenu = (props) => {
                   >
                     <SelectDay
                       style={{
-                        width: '25%',
+                        width: '40%',
                       }}
                     />
                   </FormItem>
                   <FormItem
                     // label="Thời gian hiệu lực"
-                    name="date"
+                    name="time_from_to"
                     rules={[
                       {
                         required: true,
@@ -132,9 +150,8 @@ const UpdateMenu = (props) => {
                       picker="time"
                       noStyle
                       showTime
-                      use12Hours
-                      format="h:mm a"
-                      minuteStep={15}
+                      format="hh:mm"
+                      minuteStep={30}
                       style={{
                         width: '100%',
                       }}

@@ -1,21 +1,22 @@
-import { getTableData } from '@/services/table';
+import { getTableData2 } from '@/services/table';
 import { buildParams } from '@/utils/utils';
 import { useFormTable } from '@umijs/hooks';
 import { Button, Form, Row, Space, Table } from 'antd';
 import React, { useState } from 'react';
+import request from 'umi-request';
 
 const columns = [
   {
     title: 'ID',
-    dataIndex: 'id',
+    dataIndex: 'product_id',
   },
   {
     title: 'Tên sản phẩm',
-    dataIndex: 'name',
+    dataIndex: 'product_name',
   },
   {
     title: 'Giá cơ bản',
-    dataIndex: 'price',
+    dataIndex: 'price1',
   },
 ];
 
@@ -29,7 +30,11 @@ const ProductTable = ({ onRowSelection }) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
-      return getTableData('menus', options);
+      return request.get(`http://13.250.232.85/api/v1/products`, options).then((res) => ({
+        total: res.metadata.total,
+        list: res.data,
+      }));
+      // return getTableData2('products', options);
     },
     {
       defaultPageSize: 10,
@@ -45,6 +50,7 @@ const ProductTable = ({ onRowSelection }) => {
   );
 
   const rowSelection = {
+    type: 'radio',
     selectedRowKeys,
     onChange: (selectedkeys, selectedRows) => {
       onRowSelection(selectedkeys, selectedRows);
@@ -54,7 +60,15 @@ const ProductTable = ({ onRowSelection }) => {
 
   const hasSelected = selectedRowKeys.length > 0;
 
-  return <Table rowKey="id" rowSelection={rowSelection} columns={columns} {...tableProps} />;
+  return (
+    <Table
+      style={{ width: '100%' }}
+      rowKey="product_id"
+      rowSelection={rowSelection}
+      columns={columns}
+      {...tableProps}
+    />
+  );
 };
 
 ProductTable.defaultProps = {

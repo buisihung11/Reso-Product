@@ -46,7 +46,7 @@ const errorHandler = (error) => {
 
 const request = extend({
   // eslint-disable-next-line no-undef
-  prefix: 'https://api.dominos.reso.vn/api/v1',
+  prefix: 'http://13.250.232.85/api/v1',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -66,6 +66,7 @@ request.interceptors.response.use((response, options) => {
   const { status } = response;
   const { method } = options;
   console.log('response', response);
+  // console.log('response.body', response.body);
   switch (status) {
     case 200:
       if (method !== 'GET')
@@ -105,7 +106,7 @@ request.interceptors.response.use((response, options) => {
     case 405:
       notification.error({
         message: response.statusText,
-        description: `Please try again`,
+        description: `${response.body.message}`,
       });
       break;
     default:

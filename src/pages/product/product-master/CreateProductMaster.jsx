@@ -21,6 +21,7 @@ import {
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { buildCategoriesOption } from '@/components/CommonSelect/utils';
+import CreateComboForm from '../components/CreateComboForm';
 
 const onSearchCollection = (searchValue) => {
   return request.get(`/menus`);
@@ -171,6 +172,7 @@ const CreateProductMaster = () => {
               </Form.Item>
             </Col>
           </Row>
+          <CreateComboForm form={form} />
         </Card>
       </Form>
     </PageContainer>

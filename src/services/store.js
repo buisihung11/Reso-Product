@@ -1,5 +1,5 @@
-import request from '@/utils/request';
+import request from '@/utils/requestServer';
 
 export const getStore = (searchValue) => {
-  return request.get(`/menus`, { useCache: true });
+  return request.get(`/stores`, { useCache: true });
 };

@@ -1,4 +1,5 @@
 import { parse } from 'querystring';
+import moment from 'moment';
 import pathRegexp from 'path-to-regexp';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
@@ -90,6 +91,8 @@ export const setCookie = (cname, cvalue, expireDay = 10) => {
   document.cookie = `${cname}=${cvalue};${expires};path=/`;
 };
 
+export const getCurrentStore = () => localStorage.getItem('CURRENT_STORE');
+
 // set Cookie
 export const getCookie = (cname) => {
   const name = `${cname}=`;
@@ -125,3 +128,25 @@ export const setLocalStorage = (name, value) => {
 export const getLocalStorage = (name) => localStorage.getItem(name);
 //
 export const removeLocalStorage = (key) => localStorage.removeItem(key);
+
+export const daysInWeek = [
+  'Thứ hai',
+  'Thứ ba',
+  'Thứ tư',
+  'Thứ năm',
+  'Thứ sáu',
+  'Thứ bảy',
+  'Chủ nhật',
+];
+
+export const DATE_FORMAT = 'DD/MM/YYYY';
+
+export const convertStrToDate = (string, format = DATE_FORMAT) => {
+  return moment(string, format);
+};
+
+export const convertDateToStr = (string, format = DATE_FORMAT) => {
+  return moment(string).format(format).toString();
+};
+
+export const renderDayMenu = (dayFilter = []) => dayFilter.map((dayIndex) => daysInWeek[dayIndex]);
