@@ -18,11 +18,6 @@ export const ARTICLE_TYPE_DATA = [
     label: 'Slides',
   },
   {
-    value: PRODUCT_COMBO,
-    typeCode: 'combo',
-    label: 'SP Combo',
-  },
-  {
     value: ARTICLE_STOREIS,
     label: 'Stories',
   },

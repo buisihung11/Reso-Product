@@ -1,4 +1,6 @@
+import AsyncButton from '@/components/AsyncButton';
 import ImageUploader from '@/components/ImageUploader/ImageUploader';
+import { createArticle } from '@/services/article';
 import { ARTICLE_TYPE_DATA } from '@/utils/constraints';
 import { getCurrentStore, normFile } from '@/utils/utils';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -10,8 +12,16 @@ import 'react-quill/dist/quill.snow.css';
 
 const FormItem = Form.Item;
 
+const normalizeImg = ([firstImg]) => {
+  const { response } = firstImg || {};
+  return response;
+};
+
 const CreateArticle = () => {
   const [form] = Form.useForm();
+
+  const onCreateArticle = () =>
+    form.validateFields().then((article) => createArticle(getCurrentStore(), article));
   return (
     <PageContainer>
       <Card bordered={false}>
@@ -21,18 +31,18 @@ const CreateArticle = () => {
           name="create-article-form"
           form={form}
           initialValues={{ storeID: getCurrentStore() }}
+          scrollToFirstError
         >
           <FormItem name="storeID" hidden />
           <Typography.Title level={3}>Thông tin bài viết</Typography.Title>
-          <Button type="primary" htmlType="submit">
-            Tạo
-          </Button>
+          <AsyncButton title="Tạo" onClick={onCreateArticle} type="primary" htmlType="submit" />
           <Row>
             <Col span={24}>
               <FormItem
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
-                name="imageThumbnail"
+                normalize={normalizeImg}
+                name="thumbnail"
                 label="Ảnh đại điện"
               >
                 <ImageUploader style={{ height: '100%' }} />
@@ -43,7 +53,7 @@ const CreateArticle = () => {
             <Col xs={24} md={12}>
               <FormItem
                 label="Tên bài viết"
-                name="article_name"
+                name="name"
                 rules={[
                   {
                     required: true,
@@ -55,16 +65,7 @@ const CreateArticle = () => {
               </FormItem>
             </Col>
             <Col xs={24} md={12}>
-              <FormItem
-                label="Kích hoạt"
-                name="isAvailable"
-                rules={[
-                  {
-                    // required: true,
-                    message: 'Vui lòng chọn cửa hàng',
-                  },
-                ]}
-              >
+              <FormItem label="Kích hoạt" name="isAvailable" valuePropName="checked">
                 <Switch />
               </FormItem>
             </Col>
@@ -102,7 +103,7 @@ const CreateArticle = () => {
 
           <Row gutter={16}>
             <Col xs={24} md={12}>
-              <FormItem label="Mô tả" name="description">
+              <FormItem label="Mô tả" name="decription">
                 <Input.TextArea rows={4} />
               </FormItem>
             </Col>
@@ -111,6 +112,7 @@ const CreateArticle = () => {
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
                 name="pic_url"
+                normalize={normalizeImg}
                 label="Ảnh"
               >
                 <ImageUploader style={{ height: '100%' }} />

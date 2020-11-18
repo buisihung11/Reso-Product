@@ -1,5 +1,5 @@
 import { getTableData2 } from '@/services/table';
-import { buildParams, getCurrentStore } from '@/utils/utils';
+import { buildParams, convertStrToDate, getCurrentStore } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useFormTable } from '@umijs/hooks';
@@ -10,26 +10,30 @@ import { Link } from 'umi';
 const columns = [
   {
     title: 'Tên bài viết',
-    dataIndex: 'article_name',
+    dataIndex: 'name',
     fixed: 'left',
-    render: (text, record) => <Link to={`/menu/${record.key}`}>{text}</Link>,
+    render: (text, record) => <Link to={`/article/${record.id}`}>{text}</Link>,
   },
   {
-    title: 'Nhóm sản phẩm',
-    dataIndex: 'category_id',
+    title: 'Link bài viết',
+    dataIndex: 'link',
+    render: (link) => <Link to={`${link}`}>{link}</Link>,
   },
   {
     title: 'Ngày tạo',
-    dataIndex: 'DateCreate',
+    dataIndex: 'date_create',
+    render: (text) => convertStrToDate(text, 'YYYY-MM-DD'),
   },
   {
-    title: 'Mô tảr',
-    dataIndex: 'description',
+    title: 'Mô tả',
+    dataIndex: 'decription',
   },
   {
     title: 'Trạng thái',
-    dataIndex: 'isAvailable',
-    render: () => <Tag color="green">Đang bán</Tag>,
+    dataIndex: 'is_available',
+    render: (is_available) => (
+      <Tag color="green">{is_available ? 'Hoạt động' : 'Không hoạt động'}</Tag>
+    ),
   },
 ];
 
