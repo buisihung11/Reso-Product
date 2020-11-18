@@ -59,4 +59,8 @@ export default {
   'menu.menu': 'Quản Lý Menu',
   'menu.menu.list': 'Danh sách Menu',
   'menu.menu.update': 'Cập nhật Menu',
+  // article
+  'menu.article': 'Quản Lý Bài Viết',
+  'menu.article.list': 'Danh sách Bài Viết',
+  'menu.article.create': 'Tạo Bài Viết',
 };

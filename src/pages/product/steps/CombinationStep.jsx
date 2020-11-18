@@ -6,7 +6,7 @@ import CreateComboForm from '../components/CreateComboForm';
 
 const CombinationStep = ({ productType = PRODUCT_SINGLE, form }) => {
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Divider orientation="left">Thuộc tính</Divider>
       <Row gutter={16}>
         <Col span={12}>

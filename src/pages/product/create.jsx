@@ -56,7 +56,7 @@ const CreateProduct = (props) => {
     },
     {
       title: 'Cấu hình nâng cao',
-      content: <AdvancedStep form={form} />,
+      content: () => <AdvancedStep />,
     },
   ];
 

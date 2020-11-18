@@ -123,6 +123,26 @@ export default defineConfig({
                 },
               ],
             },
+            // HOME CONFIG
+            {
+              name: 'article',
+              icon: 'read',
+              path: '/article',
+              routes: [
+                {
+                  name: 'list',
+                  icon: 'read',
+                  path: '/article/list',
+                  component: './article',
+                },
+                {
+                  name: 'create',
+                  hideInMenu: true,
+                  path: '/article/create',
+                  component: './article/create',
+                },
+              ],
+            },
             {
               component: '404',
             },

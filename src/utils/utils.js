@@ -149,4 +149,14 @@ export const convertDateToStr = (string, format = DATE_FORMAT) => {
   return moment(string).format(format).toString();
 };
 
+export const normFile = (e) => {
+  console.log('Upload event:', e);
+
+  if (Array.isArray(e)) {
+    return e;
+  }
+
+  return e && e.fileList;
+};
+
 export const renderDayMenu = (dayFilter = []) => dayFilter.map((dayIndex) => daysInWeek[dayIndex]);
