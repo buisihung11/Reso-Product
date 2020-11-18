@@ -3,7 +3,7 @@ import { formatMessage } from 'umi';
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import SelectDay from '@/components/SelectDay';
-import request from '@/utils/request';
+import request from '@/utils/requestServer';
 import { SelectStore } from '@/components/CommonSelect/CommonSelect';
 import { getCurrentStore } from '@/utils/utils';
 

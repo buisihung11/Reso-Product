@@ -99,7 +99,7 @@ export default defineConfig({
                   icon: 'smile',
                   path: '/product/product-master/create',
                   hideInMenu: true,
-                  component: './product/product-master/CreateProductMaster',
+                  component: './product/create',
                 },
               ],
             },

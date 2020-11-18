@@ -2,7 +2,7 @@ import React from 'react';
 
 import CommonSelect from '@/components/CommonSelect/CommonSelect';
 import ImageUploader from '@/components/ImageUploader/ImageUploader';
-import request from '@/utils/request';
+import request from '@/utils/requestServer';
 import { PageContainer } from '@ant-design/pro-layout';
 import {
   Card,
@@ -27,7 +27,7 @@ const onSearchCollection = (searchValue) => {
   return request.get(`/menus`);
 };
 
-const CreateProductMaster = () => {
+const CreateProductMaster = ({ productType = 'single' }) => {
   const [form] = Form.useForm();
 
   return (
@@ -172,7 +172,7 @@ const CreateProductMaster = () => {
               </Form.Item>
             </Col>
           </Row>
-          <CreateComboForm form={form} />
+          {productType === 'single' && <CreateComboForm form={form} />}
         </Card>
       </Form>
     </PageContainer>

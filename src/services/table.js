@@ -1,4 +1,3 @@
-import request from '@/utils/request';
 import requestServer from '@/utils/requestServer';
 
 const data = [];
@@ -27,7 +26,7 @@ export const getTableData = (resource, options) => {
   //   total: data.length,
   //   list: data,
   // };
-  return request.get(`/${resource}`, options).then((res) => ({
+  return requestServer.get(`/${resource}`, options).then((res) => ({
     total: res.length,
     list: res,
   }));

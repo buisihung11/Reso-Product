@@ -17,7 +17,7 @@ const ProductMenuSection = ({ menuId }) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
-      return getTableData2(`stores/${currentStoreID}/menus/${menuId}`, options);
+      return getTableData2(`stores/${currentStoreID}/menus/${menuId}/products`, options);
     },
     {
       defaultPageSize: 10,
@@ -52,7 +52,7 @@ const ProductMenuSection = ({ menuId }) => {
     // call search to re-fetch Data
     // return promise
     console.log('Update', prod);
-    return updateProductInMenu(prod, currentStoreID, menuId);
+    return updateProductInMenu(prod, currentStoreID, menuId).then(refetch);
   };
 
   return (

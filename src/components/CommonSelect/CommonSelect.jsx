@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { getCategories } from '@/services/category';
+import { PRODUCT_TYPE_DATA } from '@/utils/constraints';
 import { getStore } from '@/services/store';
 import { getCurrentStore } from '@/utils/utils';
-import { Select } from 'antd';
+import { Radio, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 const { Option } = Select;
@@ -92,13 +93,26 @@ const SelectCategory = (props) => {
   return <CommonSelect fetchOnFirst onSearch={getCategories} {...props} />;
 };
 
+const SelectProductType = (props) => {
+  return (
+    <Radio.Group
+      placeholder="Vui lòng loại sản phẩrmf"
+      options={PRODUCT_TYPE_DATA}
+      // optionType="button"
+      buttonStyle="solid"
+      {...props}
+    />
+  );
+};
+
 CommonSelect.SelectCategory = SelectCategory;
 CommonSelect.SelectStore = SelectStore;
+CommonSelect.SelectProductType = SelectProductType;
 
 CommonSelect.defaultProps = {
   onSearch: () => [],
   normalizeRes: (res) => res.data,
 };
 
-export { SelectStore, SelectCategory };
+export { SelectStore, SelectCategory, SelectProductType };
 export default CommonSelect;

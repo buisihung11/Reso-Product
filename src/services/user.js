@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request from '@/utils/requestServer';
 export async function query() {
   return request('/api/users');
 }

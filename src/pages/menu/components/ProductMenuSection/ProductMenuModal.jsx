@@ -7,9 +7,9 @@ const ProductMenuModal = ({ product, visible, onOk, onCancel, updateMode, ...pro
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   useEffect(() => {
-    // if (product != null) {
-    //   form.setFieldsValue(product);
-    // }
+    if (product != null) {
+      form.setFieldsValue(product);
+    }
   }, [product]);
 
   const getMenuPriceFormItem = () => {
@@ -42,10 +42,12 @@ const ProductMenuModal = ({ product, visible, onOk, onCancel, updateMode, ...pro
     return form
       .validateFields()
       .then((values) => {
-        form.resetFields();
-        onOk(values);
+        return onOk(values);
       })
-      .then(() => setConfirmLoading(false))
+      .then(() => {
+        setConfirmLoading(false);
+        form.resetFields();
+      })
       .catch((info) => {
         console.log('Validate Failed:', info);
       });
@@ -55,6 +57,7 @@ const ProductMenuModal = ({ product, visible, onOk, onCancel, updateMode, ...pro
     <Modal
       confirmLoading={confirmLoading}
       title="Chi tiết menu"
+      okButtonProps={{ title: updateMode ? 'Cập nhật' : 'Cập nhật sản phẩm này' }}
       visible={visible}
       onOk={handleOk}
       onCancel={onCancel}

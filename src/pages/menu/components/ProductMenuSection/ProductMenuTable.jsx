@@ -75,8 +75,8 @@ const ProductMenuTable = ({ tableProps, onUpdate }) => {
     },
     {
       title: 'Giá cố định',
-      dataIndex: 'price',
-      render: (text) => <Switch disabled defaultChecked />,
+      dataIndex: 'is_fixed_price',
+      render: (isFixed) => <Switch disabled defaultChecked={!!isFixed} />,
     },
     {
       title: 'Hành động',
@@ -134,9 +134,14 @@ const ProductMenuTable = ({ tableProps, onUpdate }) => {
 
   const onOkHandler = (prod) => {
     if (updateMode) {
-      return Promise.resolve(onUpdate(prod));
+      return Promise.resolve(onUpdate(prod)).then(() => dispatch({ type: 'close-modal' }));
     } else {
-      dispatch({ type: 'close-modal' });
+      dispatch({
+        type: 'update-product-menu',
+        payload: {
+          currentProduct,
+        },
+      });
     }
   };
 
