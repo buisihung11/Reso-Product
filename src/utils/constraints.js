@@ -1,8 +1,9 @@
-export const PRODUCT_MASTER = 5;
-export const PRODUCT_EXTRA = 8;
+export const PRODUCT_MASTER = 6;
+export const PRODUCT_EXTRA = 5;
+export const PRODUCT_DETAIL = 7;
 export const PRODUCT_SINGLE = 0;
 export const PRODUCT_COMBO = 1;
-export const PRODUCT_COMPLEX = 7;
+export const PRODUCT_COMPLEX = 10;
 
 export const ARTICLE_HELLOBAR = 0;
 export const ARTICLE_SLIDES = 1;

@@ -46,14 +46,12 @@ const ConfigTypeModal = ({ onOk, onCancel, ...props }) => {
         onCancel={onCancelModel}
         {...props}
       >
-        <Form form={form} layout="horizontal" name="product_in_menu_modal">
-          <Form.Item name="product_in_menu_id" hidden />
-          <Form.Item name="product_id" hidden />
+        <Form style={{ width: '100%' }} form={form} layout="vertical" name="product_in_menu_modal">
           <Row gutter={8}>
-            <Col xs={24} md={12}>
+            <Col span={24}>
               <Form.Item
                 label="Chỉ hiện loại bài viết"
-                name="type"
+                name="articleType"
                 rules={[
                   {
                     required: true,

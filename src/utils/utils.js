@@ -159,4 +159,9 @@ export const normFile = (e) => {
   return e && e.fileList;
 };
 
+export const normalizeImg = ([firstImg]) => {
+  const { response } = firstImg || {};
+  return response;
+};
+
 export const renderDayMenu = (dayFilter = []) => dayFilter.map((dayIndex) => daysInWeek[dayIndex]);

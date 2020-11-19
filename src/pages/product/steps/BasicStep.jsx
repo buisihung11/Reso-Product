@@ -18,10 +18,11 @@ import {
   Divider,
   Tooltip,
   Select,
+  InputNumber,
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { buildCategoriesOption } from '@/components/CommonSelect/utils';
-import { normFile } from '@/utils/utils';
+import { normalizeImg, normFile } from '@/utils/utils';
 
 const BasicStep = ({ onChangeProductType, ...props }) => {
   return (
@@ -31,7 +32,8 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
           <Form.Item
             valuePropName="fileList"
             getValueFromEvent={normFile}
-            name="image"
+            normalize={normalizeImg}
+            name="pic_url"
             label="Ảnh đại điện"
           >
             <ImageUploader style={{ height: '100%' }} />
@@ -41,7 +43,7 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
-            name="productCode"
+            name="code"
             label="Mã sản phẩm"
             rules={[
               {
@@ -55,7 +57,7 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name="productName"
+            name="product_name"
             label="Tên sản phẩm"
             rules={[
               {
@@ -72,7 +74,7 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
       <Row>
         <Col span={12}>
           <Form.Item
-            name="productType"
+            name="product_type"
             label="Loại sản phẩm (ProductType)"
             rules={[
               {
@@ -87,8 +89,16 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="active" label="Kích hoạt" valuePropName="checked">
-            <Switch />
+          <Form.Item
+            name="base_price"
+            label="Giá tham khảo"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <InputNumber />
           </Form.Item>
         </Col>
       </Row>
@@ -96,7 +106,7 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
-            name="productCategory"
+            name="cat_id"
             label="Nhóm sản phẩm (Category)"
             rules={[
               {
@@ -108,6 +118,11 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
               buildOptions={buildCategoriesOption}
               placeholder="Vui lòng chọn nhóm sản phẩm"
             />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item name="active" label="Kích hoạt" valuePropName="checked">
+            <Switch />
           </Form.Item>
         </Col>
       </Row>

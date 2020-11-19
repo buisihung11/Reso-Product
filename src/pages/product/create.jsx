@@ -24,6 +24,9 @@ import {
 import BasicStep from './steps/BasicStep';
 import AdvancedStep from './steps/AdvancedStep';
 import CombinationStep from './steps/CombinationStep';
+import { createProduct } from '@/services/product';
+import AsyncButton from '@/components/AsyncButton';
+import { useHistory } from 'umi';
 
 const onSearchCollection = (searchValue) => {
   return request.get(`/menus`);
@@ -41,7 +44,9 @@ const normFile = (e) => {
 
 const CreateProduct = (props) => {
   const [form] = Form.useForm();
+  const history = useHistory();
   const [productType, setProductType] = useState(null);
+  const [formData, setFormData] = useState(null);
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -52,7 +57,7 @@ const CreateProduct = (props) => {
     },
     {
       title: 'Chi tiết sản phẩm',
-      content: () => <CombinationStep productType={productType} />,
+      content: () => <CombinationStep form={form} productType={productType} />,
     },
     {
       title: 'Cấu hình nâng cao',
@@ -60,34 +65,33 @@ const CreateProduct = (props) => {
     },
   ];
 
-  console.log('productType', productType);
+  // console.log('formData', formData);
+
+  const onCreateProduct = () => {
+    console.log(formData);
+    return createProduct(formData).then(() => history.go(0));
+  };
+
+  // console.log('form', form.getFieldsValue());
 
   return (
     <PageContainer>
       <Form
-        onFinish={(values) => console.log('Create Product', values)}
+        // onFinish={onCreateProduct}
         colon
         form={form}
         name="productInfo"
         layout="vertical"
-        // onFieldsChange={(changedFileds) => console.log('changedFields', changedFileds)}
+        onValuesChange={(changedFileds, allValues) =>
+          setFormData((prev) => ({ ...prev, ...allValues }))
+        }
       >
         <Card bordered={false} style={{ width: '100%', marginBottom: '2em' }}>
           <Row>
             <Typography.Title level={3}>{steps[currentStep].title}</Typography.Title>
           </Row>
-          <Row>{steps[currentStep].content()}</Row>
-          <Row>
-            {currentStep < steps.length - 1 && (
-              <Button type="primary" onClick={() => setCurrentStep((step) => step + 1)}>
-                Next
-              </Button>
-            )}
-            {currentStep === steps.length - 1 && (
-              <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                Done
-              </Button>
-            )}
+          <Row style={{ width: '100%' }}>{steps[currentStep].content()}</Row>
+          <Row justify="end">
             {currentStep > 0 && (
               <Button
                 style={{ margin: '0 8px' }}
@@ -95,6 +99,14 @@ const CreateProduct = (props) => {
               >
                 Previous
               </Button>
+            )}
+            {currentStep < steps.length - 1 && (
+              <Button type="primary" onClick={() => setCurrentStep((step) => step + 1)}>
+                Next
+              </Button>
+            )}
+            {currentStep === steps.length - 1 && (
+              <AsyncButton title="Tạo" type="primary" onClick={onCreateProduct} />
             )}
           </Row>
         </Card>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { getCategories } from '@/services/category';
 import { PRODUCT_TYPE_DATA } from '@/utils/constraints';
-import { getStore } from '@/services/store';
+import { getCollections, getStore } from '@/services/store';
 import { getCurrentStore } from '@/utils/utils';
 import { Radio, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -104,15 +104,19 @@ const SelectProductType = (props) => {
     />
   );
 };
+const SelectCollections = (props) => {
+  return <CommonSelect fetchOnFirst onSearch={getCollections} {...props} />;
+};
 
 CommonSelect.SelectCategory = SelectCategory;
 CommonSelect.SelectStore = SelectStore;
 CommonSelect.SelectProductType = SelectProductType;
+CommonSelect.SelectCollections = SelectCollections;
 
 CommonSelect.defaultProps = {
   onSearch: () => [],
   normalizeRes: (res) => res.data,
 };
 
-export { SelectStore, SelectCategory, SelectProductType };
+export { SelectStore, SelectCategory, SelectProductType, SelectCollections };
 export default CommonSelect;

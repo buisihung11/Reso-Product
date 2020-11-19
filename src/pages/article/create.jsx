@@ -2,7 +2,7 @@ import AsyncButton from '@/components/AsyncButton';
 import ImageUploader from '@/components/ImageUploader/ImageUploader';
 import { createArticle } from '@/services/article';
 import { ARTICLE_TYPE_DATA } from '@/utils/constraints';
-import { getCurrentStore, normFile } from '@/utils/utils';
+import { getCurrentStore, normalizeImg, normFile } from '@/utils/utils';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Card, Col, Form, Input, Radio, Row, Switch, Typography } from 'antd';
 import React from 'react';
@@ -11,11 +11,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const FormItem = Form.Item;
-
-const normalizeImg = ([firstImg]) => {
-  const { response } = firstImg || {};
-  return response;
-};
 
 const CreateArticle = () => {
   const [form] = Form.useForm();

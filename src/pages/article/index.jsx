@@ -64,7 +64,7 @@ const ArticleList = ({ history }) => {
     },
   );
 
-  const handleChangeCurrentType = (articleType) => {
+  const handleChangeCurrentType = ({ articleType }) => {
     return changeArticleType(getCurrentStore(), articleType);
   };
 
@@ -73,7 +73,7 @@ const ArticleList = ({ history }) => {
       <Form form={form} layout="inline">
         <Card bordered={false} style={{ width: '100%' }}>
           <Space direction="vertical" style={{ width: '100%' }}>
-            <Row justify="space-between">
+            <Row justify="end">
               {/* <Col span={16}>
                 <Row gutter={8}>
                   <Col xs={24} md={12}>
@@ -96,6 +96,7 @@ const ArticleList = ({ history }) => {
                   type="primary"
                   onClick={() => history.push('/article/create')}
                   icon={<PlusOutlined />}
+                  style={{ marginLeft: '8px' }}
                 >
                   Thêm Sản phẩm
                 </Button>

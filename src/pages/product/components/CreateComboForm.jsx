@@ -49,9 +49,9 @@ const CreateComboForm = ({ form }) => {
                       <Form.Item
                         {...field}
                         label="Nhóm kết họp"
-                        name={[field.name, 'isAnd']}
+                        name={[field.name, 'is_and']}
                         valuePropName="checkbox"
-                        fieldKey={[field.fieldKey, 'isAnd']}
+                        fieldKey={[field.fieldKey, 'is_and']}
                       >
                         <Switch />
                       </Form.Item>
@@ -68,6 +68,7 @@ const CreateComboForm = ({ form }) => {
                             <>
                               <Row gutter={8}>
                                 <Col span={12}>
+                                  <Form.Item hidden name="product_id" />
                                   <Form.Item
                                     {...prodChildField}
                                     label="Tên sản phẩm"
@@ -82,10 +83,10 @@ const CreateComboForm = ({ form }) => {
                                   <Form.Item
                                     {...prodChildField}
                                     label="Default Min Max"
-                                    name={[prodChildField.name, 'defaultMinmax']}
-                                    fieldKey={[prodChildField.fieldKey, 'defaultMinmax']}
+                                    name={[prodChildField.name, 'default_min_max']}
+                                    fieldKey={[prodChildField.fieldKey, 'default_min_max']}
                                   >
-                                    <Input type="number" />
+                                    <Input />
                                   </Form.Item>
                                 </Col>
                               </Row>

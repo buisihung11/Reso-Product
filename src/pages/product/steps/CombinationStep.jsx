@@ -7,11 +7,27 @@ import CreateComboForm from '../components/CreateComboForm';
 const CombinationStep = ({ productType = PRODUCT_SINGLE, form }) => {
   return (
     <div style={{ width: '100%' }}>
+      <Row>
+        {productType === PRODUCT_COMPLEX && (
+          <Col span={12}>
+            <Form.Item
+              label="Dòng sản phẩm"
+              name="general_product_id"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            ></Form.Item>
+          </Col>
+        )}
+      </Row>
       <Divider orientation="left">Thuộc tính</Divider>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
             name="size"
+            normalize={(arr) => arr.join(',')}
             label={
               <span>
                 Size&nbsp;
@@ -32,6 +48,7 @@ const CombinationStep = ({ productType = PRODUCT_SINGLE, form }) => {
         <Col span={12}>
           <Form.Item
             name="base"
+            normalize={(arr) => arr.join(',')}
             label={
               <span>
                 Base&nbsp;
