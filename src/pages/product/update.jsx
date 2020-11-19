@@ -53,6 +53,7 @@ const UpdateProduct = (props) => {
     return updateProduct(updateProductState.product_id, {
       ...update,
       attributes: update.attributes || [],
+      display_order: 1,
     });
   };
 
