@@ -16,6 +16,7 @@ const AdvancedStep = (props) => {
         <Form.Item label="Bộ sưu tập" name="collections">
           <SelectCollections mode="multiple" />
         </Form.Item>
+        <Form.Item name="display_order" hidden />
       </Col>
     </Row>
   );
