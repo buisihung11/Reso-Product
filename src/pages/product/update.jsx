@@ -10,6 +10,7 @@ import { useHistory } from 'umi';
 import BasicStep from './steps/BasicStep';
 import CombinationStep from './steps/CombinationStep';
 import AdvancedStep from './steps/AdvancedStep';
+import { normalizeImg } from '@/utils/utils';
 
 const UpdateProduct = (props) => {
   console.log('update props', props);
@@ -49,6 +50,8 @@ const UpdateProduct = (props) => {
     update.base =
       formData.base != null && Array.isArray(formData.base) ? formData.base.join(',') : null;
     console.log('update', update);
+
+    update.pic_url = formData.pic_url != null && Array.isArray(formData.pic_url) ? normalizeImg(formData.pic_url) : formData.pic_url;
 
     return updateProduct(updateProductState.product_id, {
       ...update,
