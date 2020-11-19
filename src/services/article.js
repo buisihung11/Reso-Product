@@ -5,3 +5,11 @@ export const createArticle = (storeId, data) => {
     data,
   });
 };
+
+export const changeArticleType = (storeId, articleType) => {
+  return request.put(`/stores/${storeId}/articles/switch`, {
+    params: {
+      articleType,
+    },
+  });
+};

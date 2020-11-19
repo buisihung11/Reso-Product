@@ -3,9 +3,11 @@ import { buildParams, convertStrToDate, getCurrentStore } from '@/utils/utils';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useFormTable } from '@umijs/hooks';
+import ConfigTypeModal from './configTypeModal';
 import { Form, Table, Tag, Row, Col, Select, Card, Button, Space } from 'antd';
 import React from 'react';
 import { Link } from 'umi';
+import { changeArticleType } from '@/services/article';
 
 const columns = [
   {
@@ -61,6 +63,11 @@ const ArticleList = ({ history }) => {
       paginated: true,
     },
   );
+
+  const handleChangeCurrentType = (articleType) => {
+    return changeArticleType(getCurrentStore(), articleType);
+  };
+
   return (
     <PageContainer content="Danh sách sản phẩm">
       <Form form={form} layout="inline">
@@ -84,6 +91,7 @@ const ArticleList = ({ history }) => {
                 </Row>
               </Col> */}
               <Col>
+                <ConfigTypeModal onOk={handleChangeCurrentType} type="ghost" />
                 <Button
                   type="primary"
                   onClick={() => history.push('/article/create')}
