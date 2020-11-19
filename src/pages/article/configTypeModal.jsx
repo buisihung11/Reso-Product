@@ -1,5 +1,5 @@
 import { ARTICLE_TYPE_DATA } from '@/utils/constraints';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Typography, Row, Col, Radio } from 'antd';
 import React, { useState } from 'react';
 
@@ -34,7 +34,7 @@ const ConfigTypeModal = ({ onOk, onCancel, ...props }) => {
 
   return (
     <>
-      <Button type="ghost" onClick={() => setVisible(true)} icon={<PlusOutlined />}>
+      <Button type="ghost" onClick={() => setVisible(true)} icon={<SettingOutlined />}>
         Cấu hình
       </Button>
       <Modal

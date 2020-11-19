@@ -10,7 +10,7 @@ const proSettings = {
   menu: {
     locale: true,
   },
-  title: 'Product Catalog',
+  title: 'Domino Admin',
   pwa: false,
   iconfontUrl: '',
 };

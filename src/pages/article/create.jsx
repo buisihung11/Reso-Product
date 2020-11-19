@@ -4,7 +4,7 @@ import { createArticle } from '@/services/article';
 import { ARTICLE_TYPE_DATA } from '@/utils/constraints';
 import { getCurrentStore, normalizeImg, normFile } from '@/utils/utils';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Card, Col, Form, Input, Radio, Row, Switch, Typography } from 'antd';
+import { Affix, Button, Card, Col, Form, Input, Radio, Row, Switch, Typography } from 'antd';
 import React from 'react';
 import ReactQuill from 'react-quill';
 
@@ -29,8 +29,12 @@ const CreateArticle = () => {
           scrollToFirstError
         >
           <FormItem name="storeID" hidden />
-          <Typography.Title level={3}>Thông tin bài viết</Typography.Title>
-          <AsyncButton title="Tạo" onClick={onCreateArticle} type="primary" htmlType="submit" />
+          <Row justify="space-between">
+            <Typography.Title level={3}>Thông tin bài viết</Typography.Title>
+            <Affix offsetTop={5}>
+              <AsyncButton title="Tạo" onClick={onCreateArticle} type="primary" htmlType="submit" />
+            </Affix>
+          </Row>
           <Row>
             <Col span={24}>
               <FormItem
@@ -60,7 +64,7 @@ const CreateArticle = () => {
               </FormItem>
             </Col>
             <Col xs={24} md={12}>
-              <FormItem label="Kích hoạt" name="isAvailable" valuePropName="checked">
+              <FormItem label="Kích hoạt" name="is_available" valuePropName="checked">
                 <Switch />
               </FormItem>
             </Col>
@@ -118,7 +122,24 @@ const CreateArticle = () => {
             <Col span={24}>
               <FormItem label="Nội dung bài viết" name="content_html">
                 {/* <Input.TextArea rows={4} /> */}
-                <ReactQuill />
+                <ReactQuill
+                  formats={[
+                    'header',
+                    'font',
+                    'size',
+                    'bold',
+                    'italic',
+                    'underline',
+                    'strike',
+                    'blockquote',
+                    'list',
+                    'bullet',
+                    'indent',
+                    'link',
+                    'image',
+                    'color',
+                  ]}
+                />
               </FormItem>
             </Col>
           </Row>
@@ -128,19 +149,42 @@ const CreateArticle = () => {
   );
 };
 
-// CreateArticle.modules = {
-//   toolbar: {
-//     container: [['image']],
-//     handlers: {
-//       image: imageHandler,
-//     },
-//   },
-// };
+CreateArticle.formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'color',
+];
 
-// function imageHandler() {
-//   var range = this.quill.getSelection();
-//   var value = prompt('What is the image URL');
-//   this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
-// }
+CreateArticle.modules = {
+  toolbar: {
+    container: [['image']],
+    handlers: {
+      image: imageHandler,
+    },
+  },
+};
+
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+
+function imageHandler() {
+  console.log('Imagehandler');
+  var range = this.quill.getSelection();
+  var value = prompt('What is the image URL');
+  this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+}
 
 export default CreateArticle;

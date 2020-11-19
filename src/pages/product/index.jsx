@@ -20,6 +20,7 @@ import AsyncButton from '@/components/AsyncButton';
 import { useDebounceFn, useFormTable } from '@umijs/hooks';
 import { buildParams } from '@/utils/utils';
 import { getTableData2 } from '@/services/table';
+import { SelectCategory } from '@/components/CommonSelect/CommonSelect';
 
 const columns = [
   {
@@ -37,8 +38,6 @@ const columns = [
       updateProd.base = record.attributes.base?.split(',');
       updateProd.is_available = record.is_available ?? true;
       updateProd.collections = record.collections?.map(({ id }) => id);
-
-      console.log('updateProd', updateProd);
 
       return <Link to={{ pathname: `/product/update`, state: updateProd }}>{text}</Link>;
     },
@@ -76,7 +75,9 @@ const ProductList = ({ history }) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
-      return getTableData2('products', options);
+
+      console.log('formData ,options', formData, options);
+      return getTableData2('products/all', options);
     },
     {
       defaultPageSize: 10,
@@ -106,20 +107,18 @@ const ProductList = ({ history }) => {
           <Space direction="vertical" style={{ width: '100%' }}>
             <Row justify="space-between">
               <Col span={16}>
-                <Row gutter={8}>
+                {/* <Row gutter={8}>
                   <Col xs={24} md={12}>
-                    <Form.Item label="Tên sản phẩm">
-                      <Input placeholder="Pizza" />
+                    <Form.Item name="productName">
+                      <Input />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={12}>
-                    <Form.Item label="Nhóm sản phẩm">
-                      <Select placeholder="Chọn nhóm">
-                        <Select.Option value="demo">Demo</Select.Option>
-                      </Select>
+                    <Form.Item name="product-type-id" label="Nhóm sản phẩm">
+                      <SelectCategory />
                     </Form.Item>
                   </Col>
-                </Row>
+                </Row> */}
               </Col>
               <Col>
                 <Button
@@ -143,7 +142,7 @@ const ProductList = ({ history }) => {
             <Table
               scroll={{ x: 600 }}
               rowKey="id"
-              rowSelection={rowSelection}
+              // rowSelection={rowSelection}
               columns={columns}
               {...tableProps}
             />

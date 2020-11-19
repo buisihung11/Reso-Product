@@ -7,8 +7,8 @@ import { notification } from 'antd';
 import { getCookie, deleteAllCookie, removeLocalStorage } from './utils';
 
 const codeMessage = {
-  200: 'The server successfully returned the requested data.',
-  201: 'New or modified data is successful.',
+  200: 'Thực hiện thành công.',
+  201: 'Tạo thành công',
   202: '一个请求已经进入后台排队（异步任务）。',
   204: '删除数据成功。',
   400: 'There was an error in the requested request, and the server did not create or modify data.',

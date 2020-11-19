@@ -5,6 +5,7 @@ import { getCollections, getStore } from '@/services/store';
 import { getCurrentStore } from '@/utils/utils';
 import { Radio, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { buildCategoriesOption } from './utils';
 
 const { Option } = Select;
 
@@ -71,12 +72,12 @@ const CommonSelect = ({
       showArrow
       filterOption={false}
       //   onSearch={fetchOnFirst ? null : handleSearch}
-      onChange={handleChange}
       notFoundContent={null}
       filterOption={(input, option) =>
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
       {...props}
+      onChange={handleChange}
     >
       {options}
     </Select>
@@ -97,7 +98,15 @@ const SelectStore = (props) => {
 };
 
 const SelectCategory = (props) => {
-  return <CommonSelect fetchOnFirst onSearch={getCategories} {...props} />;
+  return (
+    <CommonSelect
+      placeholder="Vui lòng chọn loại sản phẩm"
+      fetchOnFirst
+      buildOptions={buildCategoriesOption}
+      onSearch={getCategories}
+      {...props}
+    />
+  );
 };
 
 const SelectProductType = (props) => {

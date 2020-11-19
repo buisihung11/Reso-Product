@@ -57,13 +57,16 @@ const UpdateProduct = (props) => {
 
     console.log('update', update);
 
-    update.pic_url = formData.pic_url != null && Array.isArray(formData.pic_url) ? normalizeImg(formData.pic_url) : formData.pic_url;
+    update.pic_url =
+      formData.pic_url != null && Array.isArray(formData.pic_url)
+        ? normalizeImg(formData.pic_url)
+        : formData.pic_url;
 
     return updateProduct(updateProductState.product_id, {
       ...update,
       attributes: update.attributes || [],
       display_order: 1,
-    });
+    }).then(() => history.replace('/product/product-master'));
   };
 
   // console.log('form', form.getFieldsValue());

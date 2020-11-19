@@ -49,6 +49,7 @@ const BasicStep = ({ onChangeProductType, updateMode = false, ...props }) => {
               {
                 required: true,
                 type: 'string',
+                message: 'Vui lòng nhập mã sản phẩm',
               },
             ]}
           >
@@ -63,6 +64,7 @@ const BasicStep = ({ onChangeProductType, updateMode = false, ...props }) => {
               {
                 required: true,
                 type: 'string',
+                message: 'Vui lòng nhập Tên sản phẩm',
               },
             ]}
           >
@@ -79,6 +81,7 @@ const BasicStep = ({ onChangeProductType, updateMode = false, ...props }) => {
             rules={[
               {
                 required: true,
+                message: 'Vui lòng chọn loại sản phẩm',
               },
             ]}
           >
@@ -96,6 +99,7 @@ const BasicStep = ({ onChangeProductType, updateMode = false, ...props }) => {
             rules={[
               {
                 required: true,
+                message: 'Vui lòng chọn Giá tham khảo',
               },
             ]}
           >
@@ -122,7 +126,7 @@ const BasicStep = ({ onChangeProductType, updateMode = false, ...props }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="active" label="Kích hoạt" valuePropName="checked">
+          <Form.Item name="is_available" label="Kích hoạt" valuePropName="checked">
             <Switch />
           </Form.Item>
         </Col>

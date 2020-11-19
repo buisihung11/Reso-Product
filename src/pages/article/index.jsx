@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useFormTable } from '@umijs/hooks';
 import ConfigTypeModal from './configTypeModal';
-import { Form, Table, Tag, Row, Col, Select, Card, Button, Space } from 'antd';
+import { Form, Table, Tag, Row, Col, Card, Button, Space, Typography } from 'antd';
 import React from 'react';
 import { Link } from 'umi';
 import { changeArticleType } from '@/services/article';
@@ -29,12 +29,24 @@ const columns = [
   {
     title: 'Mô tả',
     dataIndex: 'decription',
+    render: (text) => (
+      <Typography.Paragraph
+        ellipsis={{
+          rows: 3,
+          expandable: true,
+        }}
+      >
+        {text}
+      </Typography.Paragraph>
+    ),
   },
   {
     title: 'Trạng thái',
     dataIndex: 'is_available',
     render: (is_available) => (
-      <Tag color="green">{is_available ? 'Hoạt động' : 'Không hoạt động'}</Tag>
+      <Tag color={is_available ? 'green' : 'magenta'}>
+        {is_available ? 'Hoạt động' : 'Không hoạt động'}
+      </Tag>
     ),
   },
 ];
@@ -98,7 +110,7 @@ const ArticleList = ({ history }) => {
                   icon={<PlusOutlined />}
                   style={{ marginLeft: '8px' }}
                 >
-                  Thêm Sản phẩm
+                  Thêm Bài Viết
                 </Button>
               </Col>
             </Row>

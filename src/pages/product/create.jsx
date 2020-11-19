@@ -69,10 +69,16 @@ const CreateProduct = (props) => {
 
   const onCreateProduct = () => {
     console.log(formData);
-    return createProduct(formData).then(() => history.go(0));
+    return createProduct(formData).then(() => history.replace('/product/list'));
   };
 
   // console.log('form', form.getFieldsValue());
+
+  const onNext = () => {
+    form.validateFields().then(() => {
+      setCurrentStep((step) => step + 1);
+    });
+  };
 
   return (
     <PageContainer>
@@ -101,7 +107,7 @@ const CreateProduct = (props) => {
               </Button>
             )}
             {currentStep < steps.length - 1 && (
-              <Button type="primary" onClick={() => setCurrentStep((step) => step + 1)}>
+              <Button type="primary" onClick={onNext}>
                 Next
               </Button>
             )}

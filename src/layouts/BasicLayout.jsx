@@ -55,7 +55,7 @@ const defaultFooterDom = (
       },
       {
         key: 'Ant Design',
-        title: 'Product Catalog',
+        title: 'Domino Admin',
         href: 'https://ant.design',
         blankTarget: true,
       },

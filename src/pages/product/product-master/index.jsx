@@ -21,6 +21,7 @@ import { useDebounceFn, useFormTable } from '@umijs/hooks';
 import { buildParams } from '@/utils/utils';
 import { getTableData, getTableData2 } from '@/services/table';
 import { PRODUCT_MASTER } from '@/utils/constraints';
+import { SelectCategory } from '@/components/CommonSelect/CommonSelect';
 
 const columns = [
   {
@@ -38,8 +39,6 @@ const columns = [
       updateProd.base = record.attributes.base?.split(',');
       updateProd.is_available = record.is_available ?? true;
       updateProd.collections = record.collections?.map(({ id }) => id);
-
-      console.log('updateProd', updateProd);
 
       return <Link to={{ pathname: `/product/update`, state: updateProd }}>{text}</Link>;
     },
@@ -77,6 +76,8 @@ const ProductMasterList = ({ history }) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
+      console.log('options', options);
+
       return getTableData2('products', {
         ...options,
         params: { ...options.params, 'product-type-id': PRODUCT_MASTER, fields: 'Collections' },
@@ -109,29 +110,14 @@ const ProductMasterList = ({ history }) => {
         <Card bordered={false} style={{ width: '100%' }}>
           <Space direction="vertical" style={{ width: '100%' }}>
             <Row justify="space-between">
-              <Col span={16}>
-                <Row gutter={8}>
-                  <Col xs={24} md={12}>
-                    <Form.Item label="Tên sản phẩm">
-                      <Input placeholder="Pizza" />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={24} md={12}>
-                    <Form.Item label="Nhóm sản phẩm">
-                      <Select placeholder="Chọn nhóm">
-                        <Select.Option value="demo">Demo</Select.Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Col>
+              <Col span={16}></Col>
               <Col>
                 <Button
                   type="primary"
                   onClick={() => history.push('/product/product-master/create')}
                   icon={<PlusOutlined />}
                 >
-                  Thêm Sản phẩm
+                  Thêm Dòng Sản phẩm
                 </Button>
               </Col>
             </Row>
