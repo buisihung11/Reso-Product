@@ -49,6 +49,12 @@ const UpdateProduct = (props) => {
       formData.size != null && Array.isArray(formData.size) ? formData.size.join(',') : null;
     update.base =
       formData.base != null && Array.isArray(formData.base) ? formData.base.join(',') : null;
+
+    update.pic_url =
+      formData.pic_url != null && Array.isArray(formData.pic_url)
+        ? normalizeImg(formData.pic_url)
+        : formData.pic_url;
+
     console.log('update', update);
 
     update.pic_url = formData.pic_url != null && Array.isArray(formData.pic_url) ? normalizeImg(formData.pic_url) : formData.pic_url;
