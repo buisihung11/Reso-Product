@@ -20,13 +20,27 @@ import AsyncButton from '@/components/AsyncButton';
 import { useDebounceFn, useFormTable } from '@umijs/hooks';
 import { buildParams } from '@/utils/utils';
 import { getTableData, getTableData2 } from '@/services/table';
+import { PRODUCT_MASTER } from '@/utils/constraints';
 
 const columns = [
   {
     title: 'Tên Dòng Sản Phẩm',
     dataIndex: 'product_name',
     fixed: 'left',
-    render: (text, record) => <Link to={`/menu/${record.key}`}>{text}</Link>,
+    render: (text, record) => {
+      const updateProd = { ...record };
+      updateProd.cat_id = record.category_id;
+      updateProd.product_type = record.product_type_id;
+      updateProd.pic_url = [{ response: record.pic_url }];
+      updateProd.base_price = record.base_price ?? record.price1;
+      updateProd.size = record.attributes.size?.split(',');
+      updateProd.base = record.attributes.base?.split(',');
+      updateProd.collections = record.collections?.map(({ id }) => id);
+
+      console.log('updateProd', updateProd);
+
+      return <Link to={{ pathname: `/product/update`, state: updateProd }}>{text}</Link>;
+    },
   },
   {
     title: 'Nhóm sản phẩm',
@@ -61,7 +75,10 @@ const ProductMasterList = ({ history }) => {
       const options = {
         params: buildParams({ current, pageSize }, s, formData),
       };
-      return getTableData2('products', { ...options, 'product-type-id': 6 });
+      return getTableData2('products', {
+        ...options,
+        params: { ...options.params, 'product-type-id': PRODUCT_MASTER, fields: 'Collections' },
+      });
     },
     {
       defaultPageSize: 10,
@@ -128,7 +145,7 @@ const ProductMasterList = ({ history }) => {
             <Table
               scroll={{ x: 600 }}
               rowKey="id"
-              rowSelection={rowSelection}
+              // rowSelection={rowSelection}
               columns={columns}
               {...tableProps}
             />

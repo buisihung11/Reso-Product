@@ -1,4 +1,8 @@
 import { Select } from 'antd';
 
 export const buildCategoriesOption = (data) =>
-  data?.map(({ cate_id, cate_name }) => <Select.Option key={cate_id}>{cate_name}</Select.Option>);
+  data?.map(({ cate_id, cate_name }) => (
+    <Select.Option value={cate_id} key={cate_id}>
+      {cate_name}
+    </Select.Option>
+  ));

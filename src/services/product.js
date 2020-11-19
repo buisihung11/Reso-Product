@@ -5,3 +5,9 @@ export const createProduct = (prod) => {
     data: prod,
   });
 };
+
+export const updateProduct = (productId, prod) => {
+  return request.post(`/products/${productId}`, {
+    data: prod,
+  });
+};

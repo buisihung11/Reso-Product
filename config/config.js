@@ -10,7 +10,7 @@ export default defineConfig({
     hmr: true,
   },
   define: {
-    API_BASE: 'https://5f62b7ce67e195001625f17c.mockapi.io/api',
+    API_BASE: 'http://54.151.235.125/api/v1',
   },
   locale: {
     // default zh-CN
@@ -87,6 +87,12 @@ export default defineConfig({
                   path: '/product/create',
                   hideInMenu: true,
                   component: './product/create',
+                },
+                {
+                  name: 'update',
+                  path: '/product/update',
+                  hideInMenu: true,
+                  component: './product/update',
                 },
                 {
                   name: 'product-master',

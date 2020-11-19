@@ -53,6 +53,7 @@ export default {
   'menu.product': 'Quản lý sản phẩm',
   'menu.product.list': 'Danh sách Sản Phẩm',
   'menu.product.create': 'Tạo Sản Phẩm',
+  'menu.product.update': 'Cập Nhật Sản Phẩm',
   'menu.product.product-master': 'Danh Sách Các Dòng Sản Phẩm',
   'menu.product.product-master-create': 'Tạo Mới Dòng Sản Phẩm',
   // menu

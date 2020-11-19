@@ -18,7 +18,7 @@ const codeMessage = {
   406: '请求的格式不可得。',
   410: '请求的资源被永久删除，且不会再得到的。',
   422: '当创建一个对象时，发生一个验证错误。',
-  500: '服务器发生错误，请检查服务器。',
+  500: 'Có lỗi xảy ra. Vui lòng thử lại',
   502: '网关错误。',
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
@@ -46,7 +46,7 @@ const errorHandler = (error) => {
 
 const request = extend({
   // eslint-disable-next-line no-undef
-  prefix: 'http://13.250.232.85/api/v1',
+  prefix: API_BASE,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',

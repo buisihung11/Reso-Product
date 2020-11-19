@@ -78,10 +78,9 @@ const BasicLayout = (props) => {
 
   useEffect(() => {
     if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-
+      // dispatch({
+      //   type: 'user/fetchCurrent',
+      // });
       // fetch all global data
     }
   }, []);

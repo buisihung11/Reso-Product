@@ -15,18 +15,14 @@ function beforeUpload(file) {
 }
 
 const ImageUploader = ({ multiple = false, onChange: onChangeForm, ...props }) => {
-  const [fileList, updateFileList] = useState(null);
+  console.log('props', props);
+  const [fileList, updateFileList] = useState(props.fileList != null ? [...props.fileList] : null);
   const [loading, setLoading] = useState(false);
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
 
   const defaultProps = {
     beforeUpload,
     onChange: (info) => {
+      console.log('info', info);
       if (info.file.status === 'uploading') {
         setLoading(true);
         return;
@@ -34,17 +30,23 @@ const ImageUploader = ({ multiple = false, onChange: onChangeForm, ...props }) =
       if (info.file.status === 'done') {
         const fileData = multiple ? info.fileList : info.file;
         onChangeForm({ fileList: multiple ? fileData : [fileData] });
-        updateFileList(fileData);
+        updateFileList(multiple ? fileData : [fileData]);
         setLoading(false);
         return;
+      }
+      if (info.file.status === 'error') {
+        message.error('Lỗi khi upload file');
+        setLoading(false);
       }
     },
   };
 
+  console.log('fileList', fileList);
+
   const fileResList = () => {
-    if (fileList === null) return null;
+    if (fileList == null) return null;
     if (!multiple) {
-      const { name, response: imgUrl } = fileList;
+      const { name, response: imgUrl } = fileList[0];
       return (
         <img
           style={{ width: '102px', height: '102px' }}
@@ -66,12 +68,19 @@ const ImageUploader = ({ multiple = false, onChange: onChangeForm, ...props }) =
     ));
   };
 
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
   return (
     <Space direction="horizontal" style={{ display: 'flex' }}>
       {fileResList()}
       <Upload
         listType="picture-card"
-        action="http://13.250.232.85/api/v1/files"
+        action="https://localhost:44363/api/v1/files"
         showUploadList={false}
         style={{ width: 250 }}
         multiple={multiple}

@@ -24,7 +24,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { buildCategoriesOption } from '@/components/CommonSelect/utils';
 import { normalizeImg, normFile } from '@/utils/utils';
 
-const BasicStep = ({ onChangeProductType, ...props }) => {
+const BasicStep = ({ onChangeProductType, updateMode = false, ...props }) => {
   return (
     <div bordered={false} style={{ width: '100%', marginBottom: '2em' }}>
       <Row>
@@ -71,7 +71,7 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
         </Col>
       </Row>
 
-      <Row>
+      <Row gutter={16}>
         <Col span={12}>
           <Form.Item
             name="product_type"
@@ -85,6 +85,7 @@ const BasicStep = ({ onChangeProductType, ...props }) => {
             <CommonSelect.SelectProductType
               size="large"
               onChange={({ target: { value } }) => onChangeProductType(value)}
+              disabled={updateMode}
             />
           </Form.Item>
         </Col>

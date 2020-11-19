@@ -9,7 +9,11 @@ import React, { useEffect, useState } from 'react';
 const { Option } = Select;
 
 const buildOptionsDefault = (storeData = []) =>
-  storeData?.map((d) => <Option key={d.id}>{d.name}</Option>);
+  storeData?.map((d) => (
+    <Option value={d.id} key={d.id}>
+      {d.name}
+    </Option>
+  ));
 
 const normalizeResDefault = (res) => res;
 
@@ -27,14 +31,16 @@ const CommonSelect = ({
   ...props
 }) => {
   const [storeData, setStoreData] = useState([]);
-
+  const [fetchingData, setFetchingData] = useState(false);
   useEffect(() => {
     if (fetchOnFirst) {
+      setFetchingData(true);
       Promise.resolve(onSearch())
         .then((res) => {
           return normalizeRes(res);
         })
-        .then((data) => setStoreData(data));
+        .then((data) => setStoreData(data))
+        .then(() => setFetchingData(false));
     }
   }, [fetchOnFirst, onSearch, normalizeRes]);
 
@@ -59,6 +65,7 @@ const CommonSelect = ({
     <Select
       showSearch
       value={value}
+      loading={fetchingData}
       placeholder="Vui lòng chọn cửa hàng"
       defaultActiveFirstOption={false}
       showArrow
@@ -80,7 +87,7 @@ const SelectStore = (props) => {
   return (
     <CommonSelect
       fetchOnFirst
-      defaultValue={getCurrentStore()}
+      defaultValue={+getCurrentStore()}
       onSearch={getStore}
       normalizeRes={normalizeRes}
       style={{ width: 200 }}
