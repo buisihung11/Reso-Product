@@ -7,7 +7,7 @@ export const createProduct = (prod) => {
 };
 
 export const updateProduct = (productId, prod) => {
-  return request.post(`/products/${productId}`, {
+  return request.put(`/products/${productId}`, {
     data: prod,
   });
 };

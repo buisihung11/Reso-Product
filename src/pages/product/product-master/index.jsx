@@ -31,10 +31,12 @@ const columns = [
       const updateProd = { ...record };
       updateProd.cat_id = record.category_id;
       updateProd.product_type = record.product_type_id;
+      updateProd.attributes = null;
       updateProd.pic_url = [{ response: record.pic_url }];
       updateProd.base_price = record.base_price ?? record.price1;
       updateProd.size = record.attributes.size?.split(',');
       updateProd.base = record.attributes.base?.split(',');
+      updateProd.is_available = record.is_available ?? true;
       updateProd.collections = record.collections?.map(({ id }) => id);
 
       console.log('updateProd', updateProd);

@@ -4,7 +4,7 @@ import request from '@/utils/requestServer';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Form, Typography, Row, Col, Button } from 'antd';
 
-import { createProduct } from '@/services/product';
+import { createProduct, updateProduct } from '@/services/product';
 import AsyncButton from '@/components/AsyncButton';
 import { useHistory } from 'umi';
 import BasicStep from './steps/BasicStep';
@@ -15,13 +15,13 @@ const UpdateProduct = (props) => {
   console.log('update props', props);
   const {
     history: {
-      location: { state: updateProduct },
+      location: { state: updateProductState },
     },
   } = props;
   const [form] = Form.useForm();
   const history = useHistory();
   const [productType, setProductType] = useState(null);
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState(updateProductState);
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -42,9 +42,18 @@ const UpdateProduct = (props) => {
 
   // console.log('formData', formData);
 
-  const onCreateProduct = () => {
-    console.log(formData);
-    return createProduct(formData).then(() => history.go(0));
+  const onUpdateProduct = () => {
+    const update = { ...formData };
+    update.size =
+      formData.size != null && Array.isArray(formData.size) ? formData.size.join(',') : null;
+    update.base =
+      formData.base != null && Array.isArray(formData.base) ? formData.base.join(',') : null;
+    console.log('update', update);
+
+    return updateProduct(updateProductState.product_id, {
+      ...update,
+      attributes: update.attributes || [],
+    });
   };
 
   // console.log('form', form.getFieldsValue());
@@ -53,7 +62,7 @@ const UpdateProduct = (props) => {
     <PageContainer>
       <Form
         // onFinish={onCreateProduct}
-        initialValues={updateProduct}
+        initialValues={updateProductState}
         colon
         form={form}
         name="productInfo"
@@ -82,7 +91,7 @@ const UpdateProduct = (props) => {
               </Button>
             )}
             {currentStep === steps.length - 1 && (
-              <AsyncButton title="Cập nhật" type="primary" onClick={onCreateProduct} />
+              <AsyncButton title="Cập nhật" type="primary" onClick={onUpdateProduct} />
             )}
           </Row>
         </Card>

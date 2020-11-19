@@ -75,7 +75,7 @@ const GlobalHeaderRight = (props) => {
         </a>
       </Tooltip> */}
       {/* <NoticeIconView /> */}
-      <SelectStore onChange={onChangeStore} style={{ width: 200 }} />
+      <SelectStore defaultActiveFirstOption onChange={onChangeStore} style={{ width: 200 }} />
       <Avatar menu />
       {REACT_APP_ENV && (
         <span>

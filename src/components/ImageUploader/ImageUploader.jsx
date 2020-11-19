@@ -80,7 +80,7 @@ const ImageUploader = ({ multiple = false, onChange: onChangeForm, ...props }) =
       {fileResList()}
       <Upload
         listType="picture-card"
-        action="https://localhost:44363/api/v1/files"
+        action={`${API_BASE}/files`}
         showUploadList={false}
         style={{ width: 250 }}
         multiple={multiple}
